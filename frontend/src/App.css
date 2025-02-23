@@ -1,0 +1,5 @@
+@import "tailwindcss";
+
+@theme{
+    --color-rabbit-red: oklch(0.606 0.257 38.180)
+}
