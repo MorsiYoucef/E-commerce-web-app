@@ -1,15 +1,13 @@
-import TopBar from "../Layout/TopBar"
-import Navbar from "./Navbar"
+import MainNavbar from "./Navbar"
+
 
 const Header = () => {
   return (
-    <div>
-      {/* TopBar */}
-      <TopBar />
+    <header className=" border-b border-gray-200">
       {/* Navbar */}
-      <Navbar />
+      <MainNavbar />
       {/* Card drawer */}
-    </div>
+    </header>
   )
 }
 

@@ -1,3 +1,4 @@
+import Footer from "../Common/Footer"
 import Header from "../Common/Header"
 
 
@@ -5,11 +6,11 @@ import Header from "../Common/Header"
 const UserLayout = () => {
   return (
     <>
-    {/* Header */}
-    <Header />
-    {/* Main content */}
-    {/* Footer */}
-        
+      {/* Header */}
+      <Header />
+      {/* Main content */}
+      {/* Footer */}
+      <Footer />
     </>
   )
 }

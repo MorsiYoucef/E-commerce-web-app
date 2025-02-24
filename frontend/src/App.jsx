@@ -5,10 +5,10 @@ function App() {
 
   return (
     <BrowserRouter>
-    <Routes>
-      <Route path='/' element={<UserLayout />} /> {/* User Layout*/}
-      <Route /> {/* Admin Layout*/}
-    </Routes>
+      <Routes>
+        <Route path='/' element={<UserLayout />} /> {/* User Layout*/}
+        <Route /> {/* Admin Layout*/}
+      </Routes>
     </BrowserRouter>
   )
 }

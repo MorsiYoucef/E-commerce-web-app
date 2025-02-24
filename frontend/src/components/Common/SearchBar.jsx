@@ -7,7 +7,7 @@ const SearchBar = () => {
     const [ searchTerm, setSearchTerm ] = useState("")
     const [ isOpen, setIsOpen ] = useState(false)
 
-    const handleSearch = (e) => {
+    const handleSearch = () => {
         setIsOpen(!isOpen)
     }
     const handleSearchToggle = (e) => {
