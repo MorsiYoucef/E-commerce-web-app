@@ -1,9 +1,10 @@
 import { Link } from "react-router-dom";
-import { FaLinkedinIn,FaGithub,FaInstagram } from "react-icons/fa";
+import { FaLinkedinIn,FaGithub,FaInstagram,FaPhoneAlt } from "react-icons/fa";
+import { FaMeta,FaXTwitter } from "react-icons/fa6";
 
 const Footer = () => {
     return (
-        <footer className="">
+        <footer className=" border-t border-gray-300">
             <div className="container mx-auto px-6 py-12">
                 {/* Grid for Footer Content */}
                 <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
@@ -29,13 +30,12 @@ const Footer = () => {
 
                     {/* Solutions */}
                     <div>
-                        <h3 className="text-lg font-semibold mb-4">Solutions</h3>
+                        <h3 className="text-lg font-semibold mb-4">Shop</h3>
                         <ul className="space-y-2">
-                            <li><a href="#" className="text-gray-400 hover:text-gray-500">Marketing</a></li>
-                            <li><a href="#" className="text-gray-400 hover:text-gray-500">Analytics</a></li>
-                            <li><a href="#" className="text-gray-400 hover:text-gray-500">Automation</a></li>
-                            <li><a href="#" className="text-gray-400 hover:text-gray-500">Commerce</a></li>
-                            <li><a href="#" className="text-gray-400 hover:text-gray-500">Insights</a></li>
+                            <li><a href="#" className="text-gray-400 hover:text-gray-500">Men's Top Wear</a></li>
+                            <li><a href="#" className="text-gray-400 hover:text-gray-500">Women's Top Wear</a></li>
+                            <li><a href="#" className="text-gray-400 hover:text-gray-500">Men's Bottom Wear</a></li>
+                            <li><a href="#" className="text-gray-400 hover:text-gray-500">Women's Bottom Wear</a></li>
                         </ul>
                     </div>
 
@@ -43,20 +43,32 @@ const Footer = () => {
                     <div>
                         <h3 className="text-lg font-semibold mb-4">Support</h3>
                         <ul className="space-y-2">
-                            <li><a href="#" className="text-gray-400 hover:text-gray-500">Submit Ticket</a></li>
-                            <li><a href="#" className="text-gray-400 hover:text-gray-500">Documentation</a></li>
-                            <li><a href="#" className="text-gray-400 hover:text-gray-500">Guides</a></li>
+                            <li><a href="#" className="text-gray-400 hover:text-gray-500"> Contact Us</a></li>
+                            <li><a href="#" className="text-gray-400 hover:text-gray-500">About Us</a></li>
+                            <li><a href="#" className="text-gray-400 hover:text-gray-500">FAQs</a></li>
+                            <li><a href="#" className="text-gray-400 hover:text-gray-500">Features</a></li>
                         </ul>
                     </div>
 
                     {/* Company */}
                     <div>
-                        <h3 className="text-lg font-semibold mb-4">Company</h3>
+                        <h3 className="text-lg font-semibold mb-4">Follow Us</h3>
                         <ul className="space-y-2">
-                            <li><a href="#" className="text-gray-400 hover:text-gray-500">About</a></li>
-                            <li><a href="#" className="text-gray-400 hover:text-gray-500">Blog</a></li>
-                            <li><a href="#" className="text-gray-400 hover:text-gray-500">Jobs</a></li>
-                            <li><a href="#" className="text-gray-400 hover:text-gray-500">Press</a></li>
+                            <li>
+                                <div className=" flex gap-4">
+                                    <a href="#"><FaMeta /></a>
+                                    <a href="#"><FaInstagram /></a>
+                                    <a href="#"><FaXTwitter /></a>
+                                </div>
+                            </li>
+                            <li className=" mt-10">
+                                <b className="text-gray-400 hover:text-gray-500">Call Us</b>
+                                <p className=" flex items-center gap-2 mt-2">
+                                    <FaPhoneAlt />
+                                    123-456-7890
+                                </p>
+                            </li>
+                            
                         </ul>
                     </div>
                 </div>
@@ -74,7 +86,7 @@ const Footer = () => {
                             <FaInstagram className="h-5 w-5 text-gray-400 hover:text-gray-500" />
                         </a>
                     </div>
-                    <p className="text-gray-400">© 2024 <a className=" font-bold text-black underline" href="https://www.linkedin.com/in/youcef-morsi-a7579a289">MORSI YOUCEF</a>, Inc. All rights reserved.</p>
+                    <p className="text-gray-400">© 2025 <a className=" font-bold text-black underline" href="https://www.linkedin.com/in/youcef-morsi-a7579a289">MORSI YOUCEF</a>, Inc. All rights reserved.</p>
                 </div>
             </div>
         </footer>
