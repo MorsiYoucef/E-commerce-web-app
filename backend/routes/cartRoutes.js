@@ -8,6 +8,6 @@ router.post('/create-cart', createCart )
 router.put('/update-quantity', updateCartItemQuantity)
 router.delete('/delete-item', deleteCart)
 router.get('/get-carts', getCarts)
-router.post('/merge-carts', mergeCartsOnLogin  )
+router.post('/merge-carts', protect , mergeCartsOnLogin  )
 
 export default router;

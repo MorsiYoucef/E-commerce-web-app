@@ -165,45 +165,49 @@ export const getCarts = async (req, res) => {
     }
 };
 
+
 export const mergeCartsOnLogin = async (req, res) => {
-        const { userId, guestId } = req.body;
+    const { guestId } = req.body;
+    const userId = req.userId; // Assuming userId is set by your auth middleware
 
-        try {
-            const guestCart = await Cart.findOne({ guestId });
-            let userCart = await Cart.findOne({ user: userId });
+    try {
+        const guestCart = await Cart.findOne({ guestId });
+        let userCart = await Cart.findOne({ user: userId });
+        
+        if (!guestCart) {
+            return res.status(404).json({ message: "No guest cart to merge" });
+        }
 
-            if (!guestCart) {
-                return res.status(404).json({ message: "No guest cart to merge" });
-            }
+        if (!userCart) {
+            userCart = new Cart({ user: userId, products: [], totalPrice: 0 });
+        }
 
-            if (!userCart) {
-                userCart = new Cart({ user: userId, products: [], totalPrice: 0 });
-            }
-
-            guestCart.products.forEach(guestProduct => {
-                const existingProductIndex = userCart.products.findIndex(
-                    p => p.productId.toString() === guestProduct.productId.toString() &&
-                        p.size === guestProduct.size &&
-                        p.color === guestProduct.color
-                );
-
-                if (existingProductIndex > -1) {
-                    userCart.products[existingProductIndex].quantity += guestProduct.quantity;
-                } else {
-                    userCart.products.push(guestProduct);
-                }
-            });
-
-            userCart.totalPrice = userCart.products.reduce((total, item) => 
-                total + (item.price * item.quantity), 0
+        // Merge products from guest cart to user cart
+        guestCart.products.forEach(guestProduct => {
+            const existingProductIndex = userCart.products.findIndex(
+                p => p.productId.toString() === guestProduct.productId.toString() &&
+                    p.size === guestProduct.size &&
+                    p.color === guestProduct.color
             );
 
-            await userCart.save();
-            await Cart.deleteOne({ guestId });
+            if (existingProductIndex > -1) {
+                userCart.products[existingProductIndex].quantity += guestProduct.quantity;
+            } else {
+                userCart.products.push(guestProduct);
+            }
+        });
 
-            res.status(200).json(userCart);
-        } catch (error) {
-            res.status(500).json({ message: "Server error", error: error.message });
-        }
-    };
+        // Recalculate total price
+        userCart.totalPrice = userCart.products.reduce((total, item) =>
+            total + (item.price * item.quantity), 0
+        );
 
+        await userCart.save();
+        await Cart.deleteOne({ guestId });
+
+        res.status(200).json(userCart);
+    } catch (error) {
+        console.error("Error in mergeCartsOnLogin:", error);
+        res.status(500).json({ message: "Server error", error: error.message });
+    }
+};
