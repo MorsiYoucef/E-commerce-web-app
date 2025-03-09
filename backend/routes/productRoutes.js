@@ -1,12 +1,16 @@
 import express from "express";
 import { protect, adminProtect } from "../middleware/authMiddleware.js";
-import { createProduct, deleteProduct, getProducts, updateProduct } from "../controllers/productControllers.js";
+import { bestSellar, createProduct, deleteProduct, getProducts, newArrivals, productDetails, similarProducts, updateProduct } from "../controllers/productControllers.js";
 
 const router = express.Router();
 
 router.get('/', getProducts)
-router.post('/createProduct',protect, adminProtect, createProduct)
-router.put('/updateProduct/:id',protect, adminProtect, updateProduct)
-router.delete('/deleteProduct/:id',protect, adminProtect, deleteProduct)
+router.get('/best-sellar/', bestSellar)
+router.get('/new-arrivals', newArrivals)
+router.get('/:id', productDetails)
+router.get('/similar/:id', similarProducts)
+router.post('/create-product',protect, adminProtect, createProduct)
+router.put('/update-product/:id',protect, adminProtect, updateProduct)
+router.delete('/delete-product/:id',protect, adminProtect, deleteProduct)
 
 export default router;

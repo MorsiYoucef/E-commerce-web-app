@@ -165,8 +165,8 @@ export const getProducts = async (req, res) => {
         }
         if (minPrice || maxPrice) {
             query.price = {};
-            if (minPrice) query.price.gte = Number(minPrice);
-            if (maxPrice) query.price.lte = Number(maxPrice);
+            if (minPrice) query.price.$gte = Number(minPrice);
+            if (maxPrice) query.price.$lte = Number(maxPrice);
         }
         if (search) {
             query.$or = [
@@ -197,5 +197,77 @@ export const getProducts = async (req, res) => {
         console.error("Error fetching products:", error);
         res.status(500).json({ success: false, message: "Server error", error: error.message });
 
+    }
+}
+
+
+export const productDetails = async (req, res) => {
+    try {
+        const product = await Product.findById(req.params.id);
+        if (!product) {
+            return res.status(404).json({ success: false, message: "Product not found" });
+        }
+        res.json(product);
+    } catch (error) {
+        console.error("Error fetching product:", error);
+        res.status(500).json({ success: false, message: "Server error", error: error.message });
+
+    }
+}
+
+export const similarProducts = async (req, res) => {
+    const { id } = req.params
+
+    try {
+        const product = await Product.findById(id);
+        if (!product) {
+            return res.status(404).json({ success: false, message: "Product not found" });
+        }
+
+        const similarProducts = await Product.find({
+            $and: [
+                { _id: { $ne: product._id } },
+                { gender: product.gender },
+                { category: product.category },
+            ],
+        }).limit(4);
+
+        res.json(similarProducts);
+    } catch (error) {
+        console.error("Error fetching similar products:", error);
+        res.status(500).json({ success: false, message: "Server error", error: error.message });
+
+    }
+}
+
+
+// @route GET /api/products/best-seller
+// @desc Get the products with highest rating
+// @access Public
+export const bestSellar = async (req, res) => { 
+    try {
+        const bestSellar = await Product.findOne().sort({ rating:-1})
+        if( !bestSellar){
+            return res.status(404).json({ success: false, message: "No products found" });
+        }
+        res.json(bestSellar);
+    } catch (error) {
+        console.error("Error fetching best seller products:", error);
+        res.status(500).json({ success: false, message: "Server error", error: error.message });
+        
+    }
+}
+
+export const newArrivals = async ( req, res) =>{
+    try {
+        const newArrivals = await Product.find().sort({ createdAt: -1 }).limit(8)
+        if(!newArrivals){
+            return res.status(404).json({ success: false, message: "No products found" });
+        }
+        res.json(newArrivals);
+    } catch (error) {
+        console.error("Error fetching new arrivals products:", error);
+        res.status(500).json({ success: false, message: "Server error", error: error.message });
+        
     }
 }
