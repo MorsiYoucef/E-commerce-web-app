@@ -14,7 +14,7 @@ export const getOrders = async (req, res) => {
 
 export const getOrder = async (req, res) => {
     try {
-        const order = await Order.findById(req.params.id).populate("user", ["username", "email"])
+        const order = await Order.findById(req.params.id).populate("user", ["username", "email"]) // populate() here is to: Retrieve Related Data: Instead of just getting the user's ID in the order document, you get the actual user data (username and email) in a single query.
         if (!order) {
             return res.status(404).json({ success: false, message: "Order not found" })
         }

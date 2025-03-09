@@ -33,6 +33,7 @@ export const createCart = async (req, res) => {
                     p.size === size &&
                     p.color === color
             )
+
             // If found, it increases the quantity.
             if (productIndex > -1) {
                 cart.products[productIndex].quantity += quantity;
@@ -103,15 +104,20 @@ export const updateCartItemQuantity = async (req, res) => {
 
         if (productIndex > -1) {
             if (quantity <= 0) {
-                cart.products.splice(productIndex, 1); // remove product from cart
+                cart.products.splice(productIndex, 1); // remove product from cart (The splice() method is a powerful array method in JavaScript that can be used to add or remove elements from an array)
             } else {
                 cart.products[productIndex].quantity = quantity;
             }
         }
 
-        cart.totalPrice = cart.products.reduce((total, item) =>
+        cart.totalPrice = cart.products.reduce((total, item) => // The reduce() method is a powerful array method in JavaScript used to reduce an array to a single value.
             total + (item.price * item.quantity), 0
         );
+        {
+            /*(total, item) => ...: This is the reducer function. It takes two arguments:
+                                total: The accumulator that keeps track of the running total.
+                                item: The current product being processed in the array.
+        */}
         await cart.save();
 
         res.status(200).json(cart);
@@ -173,7 +179,7 @@ export const mergeCartsOnLogin = async (req, res) => {
     try {
         const guestCart = await Cart.findOne({ guestId });
         let userCart = await Cart.findOne({ user: userId });
-        
+
         if (!guestCart) {
             return res.status(404).json({ message: "No guest cart to merge" });
         }
