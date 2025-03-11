@@ -9,6 +9,7 @@ import productRoutes from './routes/productRoutes.js'
 import cartRoutes from './routes/cartRoutes.js'
 import checkoutRoutes from './routes/checkoutRoutes.js'
 import orderRoutes from './routes/orderRoutes.js'
+import uploadRoutes from './routes/uploadRoutes.js'
 
 
 dotenv.config();
@@ -27,6 +28,7 @@ app.use("/api/products", productRoutes)
 app.use('/api/carts', cartRoutes )
 app.use('/api/checkouts', checkoutRoutes)
 app.use('/api/orders', orderRoutes)
+app.use('/api/uploads', uploadRoutes)  // Use upload routes from routes/uploadRoutes.js
 
 
 app.listen(PORT, () => {
