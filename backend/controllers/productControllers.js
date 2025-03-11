@@ -1,5 +1,4 @@
-import { Product } from "../models/Product.js"
-
+import {Product} from "../models/Product.js"
 
 
 export const createProduct = async (req, res) => {
@@ -25,7 +24,6 @@ export const createProduct = async (req, res) => {
             weight,
             sku,
         } = req.body;
-
         const product = new Product({
             name,
             description,
@@ -53,7 +51,7 @@ export const createProduct = async (req, res) => {
         res.status(201).json(createdProduct);
     } catch (error) {
         console.log(error)
-        res.status(400).json({ message: error.message });
+        res.status(400).json({message: error.message});
 
     }
 }
@@ -110,14 +108,14 @@ export const updateProduct = async (req, res) => {
             const updatedProduct = await product.save();
             res.json(updatedProduct);
         } else {
-            res.status(404).json({ message: "Product not found" });
+            res.status(404).json({message: "Product not found"});
         }
     } catch (error) {
 
     }
 }
 export const deleteProduct = async (req, res) => {
-    const { id } = req.params; // Get the product ID from the URL parameters
+    const {id} = req.params; // Get the product ID from the URL parameters
     console.log(id)
 
     try {
@@ -126,19 +124,32 @@ export const deleteProduct = async (req, res) => {
 
         // If the product is not found, return an error
         if (!deletedProduct) {
-            return res.status(404).json({ success: false, message: "Product not found" });
+            return res.status(404).json({success: false, message: "Product not found"});
         }
 
         // Return a success response
-        res.status(200).json({ success: true, message: "Product deleted successfully", data: deletedProduct });
+        res.status(200).json({success: true, message: "Product deleted successfully", data: deletedProduct});
     } catch (error) {
         console.error("Error deleting product:", error);
-        res.status(500).json({ success: false, message: "Server error", error: error.message });
+        res.status(500).json({success: false, message: "Server error", error: error.message});
     }
 }
 export const getProducts = async (req, res) => {
     try {
-        const { collection, size, color, gender, minPrice, maxPrice, sortBy, search, category, material, brand, limit } = req.query
+        const {
+            collection,
+            size,
+            color,
+            gender,
+            minPrice,
+            maxPrice,
+            sortBy,
+            search,
+            category,
+            material,
+            brand,
+            limit
+        } = req.query
 
         let query = {}
 
@@ -149,16 +160,16 @@ export const getProducts = async (req, res) => {
             query.category = category;
         }
         if (material) {
-            query.material = { $in: material.split(",") };
+            query.material = {$in: material.split(",")};
         }
         if (brand) {
-            query.brand = { $in: brand.split(",") };
+            query.brand = {$in: brand.split(",")};
         }
         if (size) {
-            query.sizes = { $in: size.split(",") };
+            query.sizes = {$in: size.split(",")};
         }
         if (color) {
-            query.colors = { $in: [color] };
+            query.colors = {$in: [color]};
         }
         if (gender) {
             query.gender = gender;
@@ -170,8 +181,8 @@ export const getProducts = async (req, res) => {
         }
         if (search) {
             query.$or = [
-                { name: { $regex: search, $options: "i" } },
-                { description: { $regex: search, $options: "i" } }
+                {name: {$regex: search, $options: "i"}},
+                {description: {$regex: search, $options: "i"}}
             ];
         }
         let sortOb = {};
@@ -179,13 +190,13 @@ export const getProducts = async (req, res) => {
         if (sortBy) {
             switch (sortBy) {
                 case "priceAsc":
-                    sortOb = { price: 1 };
+                    sortOb = {price: 1};
                     break;
                 case "priceDesc":
-                    sortOb = { price: -1 };
+                    sortOb = {price: -1};
                     break;
                 case "popularity":
-                    sortOb = { rating: -1 };
+                    sortOb = {rating: -1};
                 default:
                     break;
             }
@@ -195,7 +206,7 @@ export const getProducts = async (req, res) => {
         res.json(products);
     } catch (error) {
         console.error("Error fetching products:", error);
-        res.status(500).json({ success: false, message: "Server error", error: error.message });
+        res.status(500).json({success: false, message: "Server error", error: error.message});
 
     }
 }
@@ -205,37 +216,37 @@ export const productDetails = async (req, res) => {
     try {
         const product = await Product.findById(req.params.id);
         if (!product) {
-            return res.status(404).json({ success: false, message: "Product not found" });
+            return res.status(404).json({success: false, message: "Product not found"});
         }
         res.json(product);
     } catch (error) {
         console.error("Error fetching product:", error);
-        res.status(500).json({ success: false, message: "Server error", error: error.message });
+        res.status(500).json({success: false, message: "Server error", error: error.message});
 
     }
 }
 
 export const similarProducts = async (req, res) => {
-    const { id } = req.params
+    const {id} = req.params
 
     try {
         const product = await Product.findById(id);
         if (!product) {
-            return res.status(404).json({ success: false, message: "Product not found" });
+            return res.status(404).json({success: false, message: "Product not found"});
         }
 
         const similarProducts = await Product.find({
             $and: [
-                { _id: { $ne: product._id } },
-                { gender: product.gender },
-                { category: product.category },
+                {_id: {$ne: product._id}},
+                {gender: product.gender},
+                {category: product.category},
             ],
         }).limit(4);
 
         res.json(similarProducts);
     } catch (error) {
         console.error("Error fetching similar products:", error);
-        res.status(500).json({ success: false, message: "Server error", error: error.message });
+        res.status(500).json({success: false, message: "Server error", error: error.message});
 
     }
 }
@@ -244,30 +255,30 @@ export const similarProducts = async (req, res) => {
 // @route GET /api/products/best-seller
 // @desc Get the products with highest rating
 // @access Public
-export const bestSellar = async (req, res) => { 
+export const bestSellar = async (req, res) => {
     try {
-        const bestSellar = await Product.findOne().sort({ rating:-1})
-        if( !bestSellar){
-            return res.status(404).json({ success: false, message: "No products found" });
+        const bestSellar = await Product.findOne().sort({rating: -1})
+        if (!bestSellar) {
+            return res.status(404).json({success: false, message: "No products found"});
         }
         res.json(bestSellar);
     } catch (error) {
         console.error("Error fetching best seller products:", error);
-        res.status(500).json({ success: false, message: "Server error", error: error.message });
-        
+        res.status(500).json({success: false, message: "Server error", error: error.message});
+
     }
 }
 
-export const newArrivals = async ( req, res) =>{
+export const newArrivals = async (req, res) => {
     try {
-        const newArrivals = await Product.find().sort({ createdAt: -1 }).limit(8)
-        if(!newArrivals){
-            return res.status(404).json({ success: false, message: "No products found" });
+        const newArrivals = await Product.find().sort({createdAt: -1}).limit(8)
+        if (!newArrivals) {
+            return res.status(404).json({success: false, message: "No products found"});
         }
         res.json(newArrivals);
     } catch (error) {
         console.error("Error fetching new arrivals products:", error);
-        res.status(500).json({ success: false, message: "Server error", error: error.message });
-        
+        res.status(500).json({success: false, message: "Server error", error: error.message});
+
     }
 }

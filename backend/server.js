@@ -21,14 +21,7 @@ app.use(express.json());
 app.use(cookieParser());
 
 
-
-
-
-
-app.get("/", (req, res) => {
-    res.send("WELCOME TO RABBIT API!");
-});
-
+// apis
 app.use('/api/users', userRoutes);  // Use user routes from routes/userRoutes.js
 app.use("/api/products", productRoutes)
 app.use('/api/carts', cartRoutes )
