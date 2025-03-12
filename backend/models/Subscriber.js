@@ -12,4 +12,5 @@ const subscriberSchema = new mongoose.Schema({
         default: Date.now,
     },
 })
-module.exports = mongoose.model("Subscriber", subscriberSchema)
+export const Subscriber = mongoose.model('Subscriber', subscriberSchema);
+// module.exports = mongoose.model("Subscriber", subscriberSchema)
