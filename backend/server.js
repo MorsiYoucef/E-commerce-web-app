@@ -13,6 +13,7 @@ import uploadRoutes from './routes/uploadRoutes.js'
 import subscriberRoutes from './routes/subscriberRoutes.js'
 import userAdminRoutes from './routes/userAdminRoutes.js'
 import productAdminRoutes from './routes/productAdminRoutes.js'
+import orderAdminRoutes from './routes/orderAdminRoutes.js'
 
 
 dotenv.config();
@@ -37,6 +38,7 @@ app.use('/api', subscriberRoutes)  // Use subscriber routes from routes/subscrib
 //admin
 app.use('/api/users-admin', userAdminRoutes)  // Use admin routes from routes/userAdminRoutes.js
 app.use('/api/products-admin', productAdminRoutes)  // Use admin routes from routes/userAdminRoutes.js
+app.use('/api/orders-admin', orderAdminRoutes)  // Use admin routes from routes/orderAdminRoutes.js
 
 
 
